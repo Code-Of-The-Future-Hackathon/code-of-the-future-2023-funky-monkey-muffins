@@ -2,7 +2,7 @@
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
 generator client {
-  provider = "prisma-client-js"
+  provider        = "prisma-client-js"
   previewFeatures = ["views"]
 }
 
@@ -19,6 +19,7 @@ model User {
   email        String   @unique
   username     String   @unique
   passwordHash String
+  comments Comment[]
 }
 
 view UserInfo {
@@ -28,3 +29,32 @@ view UserInfo {
   email     String
   username  String
 }
+
+model Comment {
+  id          String @id @default(cuid())
+  user   User @relation(fields: [userId], references: [id])
+  userId String
+  psychologist Psychologist @relation(fields: [psychologistId], references: [id])
+  psychologistId String
+  description String
+  rating      Int
+}
+
+model Tag{
+  id String @id @default(cuid())
+  name String
+  psychologist Psychologist @relation(fields: [psychologistId], references: [id])
+  psychologistId String
+}
+
+model Psychologist {
+  id          String @id @default(cuid())
+  firstName   String
+  lastName    String
+  email       String
+  address      String
+  qualification String
+  comments Comment[]
+  tags Tag[]
+}
+

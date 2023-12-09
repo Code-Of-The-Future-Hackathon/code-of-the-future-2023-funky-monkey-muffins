@@ -6,6 +6,7 @@ const router = express.Router();
 
 // TODO: return json according to the UserInfo view
 router.get('/@me', passport.authenticate('session'), (req, res) => {
+    console.log(req.user);
     res.json(req.user);
 })
 

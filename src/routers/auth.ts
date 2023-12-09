@@ -12,7 +12,7 @@ router.post('/login', (req, res, next) => {
 }, passport.authenticate('local'));
 
 router.post('/signup', async (req, res, next) => {
-    const form = SignUpFormSchema.parse(req.body);
+    const form = /*SignUpFormSchema.parse(*/req.body/*)*/;
 
     PrismaClient.user.findUnique({
         where: {
