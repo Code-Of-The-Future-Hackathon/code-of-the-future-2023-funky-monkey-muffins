@@ -1,0 +1,34 @@
+version: "3.9"
+
+services:
+  web:
+    build: .
+    env_file: '.env'
+    ports:
+      - "3000:3000"
+    restart: always
+    depends_on:
+      - db
+    volumes:
+      - .:/code
+    command: /bin/bash -c "npm run db:push && npm run generate && npx ts-node src/index.ts "
+  db:
+    image: 'postgres:bullseye'
+    env_file: '.env'
+    volumes:
+      - 'db:/var/lib/postgresql/data'
+    ports:
+      - '1432:5432'
+  admin:
+    image: 'dpage/pgadmin4'
+    env_file: '.env'
+    volumes:
+      - 'admin:/var/lib/pgadmin'
+    ports:
+      - '1433:8081'
+    depends_on:
+     - 'db'
+
+volumes:
+  db:
+  admin:
