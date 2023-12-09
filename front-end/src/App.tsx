@@ -1,9 +1,10 @@
 import './css/App.css'
 import Home from './pages/Home'
+import LoginForm from './pages/LoginForm'
 import SignupForm from './pages/SignupForm'
 function App() {
   return (
-    <div><SignupForm/></div>
+    <div><LoginForm/></div>
   )
 }
 
