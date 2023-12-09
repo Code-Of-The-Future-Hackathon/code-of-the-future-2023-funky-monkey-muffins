@@ -1,6 +1,6 @@
 import React from "react";
 import { useFormik } from "formik";
-import logo from "../resources/Change pres logo.png"
+import logo from "../resources/logo.png"
 
 const SignupForm = () => {
     const formik = useFormik({
