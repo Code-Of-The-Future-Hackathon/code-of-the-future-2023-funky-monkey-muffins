@@ -83,6 +83,7 @@ model TherapySession {
   psychologistId String   @unique
   date           DateTime
   sessionTierId  String   @unique
+  isCompleted    Boolean  @default(false)
 
   patient      Patient            @relation(fields: [patientId], references: [id])
   psychologist Psychologist       @relation(fields: [psychologistId], references: [id])

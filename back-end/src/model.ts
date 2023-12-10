@@ -31,3 +31,9 @@ export const CreateTherapySessionFormSchema = z.object({
     sessionTierId: z.string(),
     psychologistId: z.string(),
 });
+
+export const CreateTherapySessionCommentFormSchema = z.object({
+    description: z.string().min(1).max(1000),
+    rating: z.number().min(0).max(1),
+    sessionId: z.string(),
+});
