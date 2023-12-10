@@ -8,7 +8,7 @@ import express from 'express';
 import prisma from '../../db';
 import passport from 'passport';
 import { User } from '@prisma/client';
-import { CreateTherapySessionFormSchema } from '../../model';
+import { CreateTherapySessionCommentFormSchema, CreateTherapySessionFormSchema } from '../../model';
 
 const router = express.Router();
 
@@ -30,6 +30,7 @@ router.get('/timeline', passport.authenticate('local'), (req, res) => {
         select: {
             id: true,
             date: true,
+            isCompleted: true,
             psychologist: {
                 select: {
                     id: true,
@@ -85,6 +86,7 @@ router.get('/timeline/:psychologistId', passport.authenticate('local'), (req, re
         select: {
             id: true,
             date: true,
+            isCompleted: true,
             psychologist: {
                 select: {
                     id: true,
@@ -119,6 +121,65 @@ router.get('/timeline/:psychologistId', passport.authenticate('local'), (req, re
     })
 });
 
+router.post('/comment', passport.authenticate('local'), (req, res) => {
+    if (!req.user) {
+        return res.status(401).json({ message: 'Unauthorized' });
+    }
+
+    let user = req.user as User;
+    let result = CreateTherapySessionCommentFormSchema.safeParse(req.body);
+
+    if (!result.success) {
+        return res.status(400).json({ message: 'Invalid request body' });
+    }
+
+    let form = result.data;
+
+    // check if user was patient in session
+    prisma.therapySession.findUnique({
+        where: {
+            id: form.sessionId
+        },
+        include: {
+            patient: {
+                select: {
+                    user: {
+                        select: {
+                            id: true
+                        }
+                    }
+                }
+            }
+        }
+    }).then(session => {
+        if (!session || session.patient.user.id !== user.id) {
+            return res.status(401).json({ message: 'Unauthorized' });
+        }
+
+        prisma.comment.create({
+            data: {
+                description: form.description,
+                rating: form.rating,
+                session: {
+                    connect: {
+                        id: form.sessionId
+                    }
+                }
+            }
+        }).then(comment => {
+            res.json(comment);
+        }).catch(err => {
+            console.error(err);
+            res.status(500);
+            res.json({ message: 'Internal server error' });
+        })
+    }).catch(err => {
+        console.error(err);
+        res.status(500);
+        res.json({ message: 'Internal server error' });
+    })
+});
+
 router.post('/', passport.authenticate('local'), (req, res) => {
     if (!req.user) {
         return res.status(401).json({ message: 'Unauthorized' });
@@ -136,6 +197,7 @@ router.post('/', passport.authenticate('local'), (req, res) => {
     prisma.therapySession.create({
         data: {
             date: form.date,
+            isCompleted: true,
             patient: {
                 connect: {
                     userId: user.id
