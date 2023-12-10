@@ -1,6 +1,6 @@
 <div align="center">
   
-![Logo](https://github.com/Code-Of-The-Future-Hackathon/code-of-the-future-2023-funky-monkey-muffins/blob/front-end/front-end/src/resources/logo.png)
+![Logo](https://github.com/Code-Of-The-Future-Hackathon/code-of-the-future-2023-funky-monkey-muffins/blob/main/front-end/src/resources/logo.png)
 
 </div>
 
