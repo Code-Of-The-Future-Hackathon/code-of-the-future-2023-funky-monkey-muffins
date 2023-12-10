@@ -1,11 +1,11 @@
 import passport from 'passport';
 import { Strategy as LocalStrategy } from 'passport-local';
-import PrismaClient from '../db';
+import prisma from '../db';
 import argon2 from 'argon2';
 
 passport.use(new LocalStrategy(
     async function (username, password, done) {
-        return PrismaClient.user.findUnique({
+        return prisma.user.findUnique({
             where: {
                 username
             }
@@ -32,9 +32,18 @@ passport.serializeUser((user: object, done) => {
 })
 
 passport.deserializeUser((id: string, done) => {
-    PrismaClient.user.findUnique({
+    prisma.user.findUnique({
         where: {
             id
+        },
+        select: {
+            createdAt: true,
+            id: true,
+            firstName: true,
+            lastName: true,
+            phoneNumber: true,
+            email: true,
+            username: true,
         }
     }).then(user => {
         if (!user) {
