@@ -48,8 +48,9 @@ router.get('/@me', passport.authenticate('session'), (req, res) => {
             username: user.username,
         });
     }).catch(err => {
+        console.error(err);
         res.status(500);
-        res.json(err);
+        res.json({ message: 'Internal server error'});
     })
 })
 
@@ -82,8 +83,9 @@ router.get('/:id', (req, res) => {
             username: user.username,
         });
     }).catch(err => {
+        console.error(err);
         res.status(500);
-        res.json(err);
+        res.json({ message: 'Internal server error' });
     })
 });
 
@@ -119,8 +121,9 @@ router.put('/@me', passport.authenticate('session'), (req, res) => {
             username: user.username,
         });
     }).catch(err => {
+        console.error(err)
         res.status(500);
-        res.json(err);
+        res.json({ message: 'Internal server error' });
     })
 });
 

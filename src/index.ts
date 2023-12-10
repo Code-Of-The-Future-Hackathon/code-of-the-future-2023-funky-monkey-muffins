@@ -6,6 +6,7 @@ import session from 'express-session';
 import AuthRouter from './routers/auth';
 import PsychologistRouter from './routers/api/psychologist';
 import UserRouter from './routers/api/user';
+import TherapySessionRouter from './routers/api/therapySession';
 
 const app = express()
 
@@ -19,6 +20,7 @@ app.use(express.json())
 app.use(passport.initialize())
 app.use(passport.session())
 
+app.use('/api/therapySession', TherapySessionRouter);
 app.use('/api/psychologist', PsychologistRouter);
 app.use('/api/user', UserRouter);
 

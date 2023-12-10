@@ -55,12 +55,15 @@ router.post('/signup', async (req, res) => {
                     phoneNumber: user.phoneNumber,
                 });
             }).catch(err => {
+                console.error(err);
                 res.status(500);
-                res.json(err);
+                res.json({ message: 'Internal server error' });
             })
         }
     }).catch(err => {
-        return res.json(err);
+        console.error(err);
+        res.status(500);
+        return res.json({ message: 'Internal server error' });
     })
 });
 

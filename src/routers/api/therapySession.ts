@@ -160,3 +160,5 @@ router.post('/', passport.authenticate('local'), (req, res) => {
         res.json({ message: 'Internal server error' });
     })
 });
+
+export default router;
