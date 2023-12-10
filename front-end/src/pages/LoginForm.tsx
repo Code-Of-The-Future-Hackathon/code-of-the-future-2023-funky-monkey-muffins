@@ -1,7 +1,7 @@
 import React from "react";
 import { useFormik } from "formik";
-import Nav from '../components/Nav';
 import Logo from '../resources/logo.png'
+import { Link } from "wouter";
 
 const LoginForm = () => {
     const formik = useFormik({
@@ -43,9 +43,9 @@ const LoginForm = () => {
                             />
                         </div>
                         <div className="flex justify-between pt-4 pb-0">
-                            <a className="bg-gray-200 rounded-xl p-2">Sign up</a>
+                            <Link href="/signup"><a className="bg-gray-200 rounded-xl p-2">Sign up</a></Link>
                             <div className=""></div>
-                            <button className="bg-darkBlue text-white rounded-xl p-2" type="submit">Login</button>
+                            <Link href="/psychologists"><button className="bg-darkBlue text-white rounded-xl p-2" type="submit">Login</button></Link>
                         </div>
                     </form>
                 </div>

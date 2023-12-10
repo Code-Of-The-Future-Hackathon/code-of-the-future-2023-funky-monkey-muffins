@@ -1,6 +1,7 @@
 import React from "react";
 import { useFormik } from "formik";
 import logo from "../resources/logo.png"
+import { Link } from "wouter";
 
 const SignupForm = () => {
     const formik = useFormik({
@@ -76,8 +77,12 @@ const SignupForm = () => {
                         placeholder="Last Name"
                     />
                     <div className="flex justify-between mt-4">
+                        <Link href="/psychologists">
                         <button type="submit" className="mt-4">Sign Up</button>
+                        </Link>
+                        <Link href="/login">
                         <button className="mt-4">Log In </button>
+                        </Link>
                     </div>
                 </form>
             </div>
