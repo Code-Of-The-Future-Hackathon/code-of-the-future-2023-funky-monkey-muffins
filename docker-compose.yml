@@ -11,7 +11,7 @@ services:
       - db
     volumes:
       - .:/code
-    command: /bin/bash -c "npm run db:push && npm run generate && npx ts-node src/index.ts "
+    command: /bin/bash -c "npm run db:push && npm run generate && npm start"
   db:
     image: 'postgres:bullseye'
     env_file: '.env'
